@@ -7,41 +7,73 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [userData, setUserdata] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  // Fetch User Data
+  // =============================
+  // STEP 1: Load saved user on refresh
+  // =============================
   useEffect(() => {
-    const fetchUser = async () => {
+    const savedUser = localStorage.getItem("userInfo");
+
+    if (savedUser) {
       try {
-        const response = await httpAction({
-          url: apis().getUserDetails,
-          method: "GET",
-        });
-
-        if (response?.status) {
-          setUserdata(response.user);
-        } else {
-          console.log("No user found");
+        const parsed = JSON.parse(savedUser);
+        setUserdata(parsed);
+        if (parsed._id || parsed.userId) {
+          fetchTasks(parsed._id || parsed.userId);
         }
-      } catch (error) {
-        console.error("Error fetching user:", error);
+      } catch (err) {
+        console.error("Error parsing saved user:", err);
+        localStorage.removeItem("userInfo");
       }
-    };
+    }
 
-    fetchUser();
+    verifyUserFromServer(); // optional backend validation
   }, []);
 
-  // Fetch Tasks when userData is available
-  useEffect(() => {
-    if (userData?._id) {
-      fetchTasks(userData._id);
-    }
-  }, [userData]);
+  // =============================
+  // STEP 2: Verify user from backend (optional but recommended)
+  // =============================
+  const verifyUserFromServer = async () => {
+    try {
+      const response = await httpAction({
+        url: apis().getUserDetails,
+        method: "GET",
+        credentials: "include",
+      });
 
+      if (response?.status) {
+        const fresh = response.user;
+
+        setUserdata(fresh);
+        localStorage.setItem("userInfo", JSON.stringify(fresh));
+
+        if (fresh._id || fresh.userId) {
+          fetchTasks(fresh._id || fresh.userId);
+        }
+      } else {
+        // Backend says no user session
+        setUserdata(null);
+        localStorage.removeItem("userInfo");
+      }
+    } catch (error) {
+      console.error("User verify error:", error);
+      localStorage.removeItem("userInfo");
+      setUserdata(null);
+    } finally {
+      setLoadingUser(false);
+    }
+  };
+
+  // =============================
+  // STEP 3: Fetch tasks
+  // =============================
   const fetchTasks = async (employeeId) => {
     try {
       const response = await httpAction({
-        url: `${apis().getTasks}/${employeeId}`,
+        url: ${apis().getTasks}/${employeeId},
         method: 'GET',
+        credentials: "include",
       });
 
       if (response?.status) {
@@ -56,7 +88,15 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userData, setUserdata, tasks, setTasks }}>
+    <AuthContext.Provider
+      value={{
+        userData,
+        setUserdata,
+        tasks,
+        setTasks,
+        loadingUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
