@@ -7,73 +7,41 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [userData, setUserdata] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [loadingUser, setLoadingUser] = useState(true);
 
-  // =============================
-  // STEP 1: Load saved user on refresh
-  // =============================
+  // Fetch User Data
   useEffect(() => {
-    const savedUser = localStorage.getItem("userInfo");
-
-    if (savedUser) {
+    const fetchUser = async () => {
       try {
-        const parsed = JSON.parse(savedUser);
-        setUserdata(parsed);
-        if (parsed._id || parsed.userId) {
-          fetchTasks(parsed._id || parsed.userId);
-        }
-      } catch (err) {
-        console.error("Error parsing saved user:", err);
-        localStorage.removeItem("userInfo");
-      }
-    }
+        const response = await httpAction({
+          url: apis().getUserDetails,
+          method: "GET",
+        });
 
-    verifyUserFromServer(); // optional backend validation
+        if (response?.status) {
+          setUserdata(response.user);
+        } else {
+          console.log("No user found");
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  // =============================
-  // STEP 2: Verify user from backend (optional but recommended)
-  // =============================
-  const verifyUserFromServer = async () => {
-    try {
-      const response = await httpAction({
-        url: apis().getUserDetails,
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (response?.status) {
-        const fresh = response.user;
-
-        setUserdata(fresh);
-        localStorage.setItem("userInfo", JSON.stringify(fresh));
-
-        if (fresh._id || fresh.userId) {
-          fetchTasks(fresh._id || fresh.userId);
-        }
-      } else {
-        // Backend says no user session
-        setUserdata(null);
-        localStorage.removeItem("userInfo");
-      }
-    } catch (error) {
-      console.error("User verify error:", error);
-      localStorage.removeItem("userInfo");
-      setUserdata(null);
-    } finally {
-      setLoadingUser(false);
+  // Fetch Tasks when userData is available
+  useEffect(() => {
+    if (userData?._id) {
+      fetchTasks(userData._id);
     }
-  };
+  }, [userData]);
 
-  // =============================
-  // STEP 3: Fetch tasks
-  // =============================
   const fetchTasks = async (employeeId) => {
     try {
       const response = await httpAction({
-        url: ${apis().getTasks}/${employeeId},
+        url: `${apis().getTasks}/${employeeId}`,
         method: 'GET',
-        credentials: "include",
       });
 
       if (response?.status) {
@@ -88,15 +56,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        userData,
-        setUserdata,
-        tasks,
-        setTasks,
-        loadingUser,
-      }}
-    >
+    <AuthContext.Provider value={{ userData, setUserdata, tasks, setTasks }}>
       {children}
     </AuthContext.Provider>
   );

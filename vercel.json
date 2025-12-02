@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/(employeeDash|adminDash|login|signup|.*)",
-      "destination": "/index.html"
-    }
-  ]
-}
