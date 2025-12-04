@@ -1,16 +1,113 @@
-# React + Vite
+# 🚀 Employee Management System (EMS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack **Employee Task Management System** built using the **MERN stack**, featuring authentication, task assignment, task state updates, and a fully responsive modern UI.  
+This system allows employees to track tasks (New, Active, Completed, Failed) with real-time updates.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Features
 
-## React Compiler
+### 👨‍💼 Employee Functions
+- 🔐 Login & Signup (JWT + HTTP-Only Cookies)
+- 📥 View assigned tasks  
+  - New Tasks  
+  - Active Tasks  
+  - Completed Tasks  
+  - Failed Tasks  
+- ✏ Accept tasks  
+- ✅ Mark tasks completed  
+- ❌ Mark tasks failed  
+- 📊 Dashboard statistics  
+- ⚡ Smooth state updates via Context API  
+- 📱 Fully mobile-responsive design  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🛠 Admin Functions (Future Scope)
+- Add employees  
+- Assign tasks  
+- Manage user roles  
+- Analytics dashboard  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🧰 Tech Stack
+
+### 🌐 Frontend
+- **React.js (Vite)**
+- **Tailwind CSS**
+- React Router DOM
+- Context API
+- React Hot Toast
+- Custom reusable UI components
+
+### 🖥 Backend
+- **Node.js**
+- **Express.js**
+- JWT Authentication
+- bcrypt.js (Password Hashing)
+- Cookie-Parser
+- CORS configured for local + deployed domains
+- MVC structured backend
+
+### 🗄 Database
+- **MongoDB Atlas**
+- Mongoose ODM
+- Employee Model
+- Task Model
+
+## ⚙️ Backend Setup
+
+### 1️⃣ Install Dependencies
+cd backend
+npm install
+
+### 2️⃣ Create .env
+- PORT=4044
+- MONGO_URI=your_mongodb_connection_string
+- JWT_SECRET=your_secret
+
+### 3️⃣ Run Backend
+npm start
+
+
+Backend runs on: http://localhost:4044
+
+### 🌐 Frontend Setup
+## 1️⃣ Install Dependencies
+cd frontend
+npm install
+
+## 2️⃣ Start React App
+npm run dev
+
+
+Frontend runs on: http://localhost:5173
+
+### 🚀 Deployment
+#### Service	Purpose
+- Vercel	Frontend Hosting
+- Render Backend Hosting
+- MongoDB Atlas	Database
+
+### CORS is configured for:
+
+- localhost
+
+- Vercel frontend domain
+
+### 📸 Screenshots (Add Here)
+
+Add the following:
+
+Login Page
+
+Signup Page
+
+Dashboard
+
+Task Cards (New/Active/Completed/Failed)
+
+### 👤 Author
+
+- Sumit Raj Tiwari
+- Int. MTech CSE in Cyber Security
+- VIT Bhopal University
