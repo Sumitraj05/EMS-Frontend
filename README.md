@@ -94,18 +94,6 @@ Frontend runs on: http://localhost:5173
 
 - Vercel frontend domain
 
-### 📸 Screenshots (Add Here)
-
-Add the following:
-
-Login Page
-
-Signup Page
-
-Dashboard
-
-Task Cards (New/Active/Completed/Failed)
-
 ### 👤 Author
 
 - Sumit Raj Tiwari
