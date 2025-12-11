@@ -3,6 +3,8 @@
 A full-stack **Employee Task Management System** built using the **MERN stack**, featuring authentication, task assignment, task state updates, and a fully responsive modern UI.  
 This system allows employees to track tasks (New, Active, Completed, Failed) with real-time updates.
 
+<img width="1280" height="577" alt="image" src="https://github.com/user-attachments/assets/085837f5-8f88-4fc3-87e7-7534407b1816" />
+
 ---
 
 ## 📌 Features
@@ -19,13 +21,15 @@ This system allows employees to track tasks (New, Active, Completed, Failed) wit
 - ❌ Mark tasks failed  
 - 📊 Dashboard statistics  
 - ⚡ Smooth state updates via Context API  
-- 📱 Fully mobile-responsive design  
+- 📱 Fully mobile-responsive design
+<img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/023fc7d6-9e86-45ac-b2ce-ed9fddc42cfd" />
 
 ### 🛠 Admin Functions (Future Scope)
 - Add employees  
 - Assign tasks  
 - Manage user roles  
 - Analytics dashboard  
+<img width="1280" height="576" alt="image" src="https://github.com/user-attachments/assets/3aaf2f0f-7729-485e-8c6b-fa79c7252616" />
 
 ---
 
